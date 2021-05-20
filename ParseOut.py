@@ -97,7 +97,7 @@ def ThesisScore(text, p_key, n_key, key_score):
         return score
 
 def remove_punctuation(s_in, s_to=u' '):
-    if isinstance(s_in, unicode):
+    if isinstance(s_in, str):
         not_letters = u'!"#%\'()*+,-./:;<=>?@[\]^_`{|}~\n'
         trans_table = dict((ord(char), s_to) for char in not_letters)
         return s_in.translate(trans_table)
@@ -125,7 +125,7 @@ def main():
     s8 = '[PDF] semanticscholar.org'
     s9 = ''
     tag = ParseOutTag(s8)
-    print type(tag)
+    print (type(tag))
 
 if __name__ == '__main__':
     main()

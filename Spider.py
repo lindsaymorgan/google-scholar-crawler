@@ -43,13 +43,33 @@ class Spider:
         for index, page_url in enumerate(page_urls):
             res = requests.get(page_url)
             soup = BeautifulSoup(res.text, self.parser)
-            print "You are now in page ", (index + 1), " !!!"
+            print ("You are now in page ", (index + 1), " !!!")
 
             ### Test if the crawler is blocked by the Google robot check
-            page_links = soup.select('div[id="gs_nml"] a')
+            page_links = soup.select('div[class="gs_ai_t"]')
+
             if not page_links:
                 logger.info('1.Google robot check might ban you from crawling!!')
                 logger.info('2.You might not crawl the page of google scholar')
+            else:
+                for p in page_links:
+                    info=p.findAll(text=True)
+                    info=[i for i in info if i!=' ']
+                    del info[2]
+                    info[2]=int(info[2][8:])
+                    labels='-'.join(info[4:])
+                    href=self.__googleScholarURL+soup.select('div[class="gs_ai_t"]')[0].findAll('a',href=True)[0]['href']
+                    personalpage = requests.get(href)
+                    personsoup = BeautifulSoup(personalpage.text, self.parser)
+                    homepage = personsoup.select('div[class="gsc_prf_il"][id="gsc_prf_ivh"]')[0].findAll('a',href=True)[0]['href']
+                    info=info[:4]+[homepage]+[labels]
+
+                next_page=self.__googleScholarURL+soup.select('button[aria-label="Next"]')[0]['onclick'][17:]
+
+
+
+
+
 
             ### Try to crawl the page no matter it might be banned by Google robot check
             results += self.__crawlPage(soup, index + 1)
