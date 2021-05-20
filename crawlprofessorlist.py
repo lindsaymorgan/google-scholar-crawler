@@ -16,8 +16,8 @@ from Spider import Spider
 def main():
     ### The start page's URL
     label='network_science'
-    start_url = 'https://scholar.google.com.tw/citations?view_op=search_authors&hl=en&mauthors=label:'+label
-    __googleScholarURL="http://scholar.google.com.tw"
+    start_url = 'https://scholar.google.com.hk/citations?view_op=search_authors&hl=en&mauthors=label:'+label
+    __googleScholarURL="http://scholar.google.com.hk"
     page=20
 
     ### p_key and n
